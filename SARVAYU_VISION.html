@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SARVAYU — The Complete Vision</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #0a0a0c;
+    --deep: #111114;
+    --surface: #16161a;
+    --border: rgba(255,255,255,0.06);
+    --moss: #c8a8f0;
+    --leaf: #5dd48a;
+    --ember: #7bb8f0;
+    --gold: #d4a853;
+    --ink: #f0eaf8;
+    --muted: rgba(240,234,248,0.45);
+    --dim: rgba(240,234,248,0.2);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--night);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* Ambient background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(200,168,240,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 100%, rgba(93,212,138,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(123,184,240,0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--moss);
+    opacity: 0.7;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1s ease both;
+  }
+
+  .hero-wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 15vw, 11rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    background: linear-gradient(135deg, #f0eaf8 0%, #c8a8f0 40%, #7bb8f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeUp 1s ease 0.15s both;
+    margin-bottom: 2rem;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.6;
+    animation: fadeUp 1s ease 0.3s both;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    animation: fadeUp 1s ease 0.45s both;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--moss), transparent);
+    margin: 4rem auto 0;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+
+  /* ── PARTS ── */
+  .part {
+    padding: 7rem 0;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .part-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--moss);
+    opacity: 0.6;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .part-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .part-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 3.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── PROSE ── */
+  .prose p {
+    font-size: 0.975rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.9;
+  }
+
+  .prose p strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .prose h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin: 3rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── SENSOR CARDS ── */
+  .generation-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    margin: 3rem 0;
+  }
+
+  .generation-card {
+    background: var(--surface);
+    padding: 2rem 2.5rem;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+
+  .generation-card:hover {
+    background: #1c1c22;
+  }
+
+  .gen-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--leaf);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .gen-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .gen-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .gen-items li {
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .gen-items li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--dim);
+  }
+
+  .gen-badge {
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid;
+  }
+
+  .gen-badge.active {
+    border-color: rgba(93,212,138,0.3);
+    color: var(--leaf);
+    background: rgba(93,212,138,0.05);
+  }
+
+  .gen-badge.research {
+    border-color: rgba(200,168,240,0.3);
+    color: var(--moss);
+    background: rgba(200,168,240,0.05);
+  }
+
+  .gen-badge.horizon {
+    border-color: rgba(123,184,240,0.3);
+    color: var(--ember);
+    background: rgba(123,184,240,0.05);
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    margin: 3rem 0;
+  }
+
+  .stat-cell {
+    background: var(--surface);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
+
+  .stat-cell:hover { background: #1c1c22; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--ink), var(--moss));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--dim);
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+
+  /* ── PROPOSAL BLOCK ── */
+  .proposal-block {
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    margin: 3rem 0;
+  }
+
+  .proposal-header {
+    background: linear-gradient(135deg, rgba(200,168,240,0.08), rgba(93,212,138,0.05));
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .proposal-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .proposal-header p {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .proposal-items {
+    background: var(--surface);
+  }
+
+  .proposal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+  }
+
+  .proposal-item:last-child { border-bottom: none; }
+  .proposal-item:hover { background: #1c1c22; }
+
+  .proposal-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(200,168,240,0.1);
+    border: 1px solid rgba(200,168,240,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .proposal-text strong {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .proposal-text span {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    margin: 3rem 0;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--moss), var(--leaf), var(--ember), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 3rem 2rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -0.3rem;
+    top: 0.45rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--moss);
+    box-shadow: 0 0 12px rgba(200,168,240,0.5);
+  }
+
+  .timeline-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--moss);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .timeline-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-body {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── PRICE CALLOUT ── */
+  .price-callout {
+    border: 1px solid rgba(212,168,83,0.2);
+    background: rgba(212,168,83,0.04);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
+    margin: 3rem 0;
+  }
+
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(212,168,83,0.6);
+    margin-bottom: 1rem;
+  }
+
+  .price-context {
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── NORTH STAR ── */
+  .north-star {
+    padding: 8rem 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+
+  .north-star::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--moss));
+  }
+
+  .north-star-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 620px;
+    margin: 0 auto 3rem;
+  }
+
+  .north-star-quote em {
+    font-style: normal;
+    color: var(--moss);
+  }
+
+  .north-star-attribution {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 3rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--dim);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-align: right;
+  }
+
+  /* ── QUESTION LIST ── */
+  .question-list {
+    list-style: none;
+    margin: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .question-list li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding: 1rem 1.25rem 1rem 1.5rem;
+    border-left: 2px solid rgba(200,168,240,0.3);
+    background: rgba(200,168,240,0.03);
+    border-radius: 0 0.75rem 0.75rem 0;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .footer-meta { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-eyebrow">Confidential · March 2026</span>
+    <h1 class="hero-wordmark">SARVAYU</h1>
+    <p class="hero-tagline">A biological intelligence system — worn on the body, running on the phone, embedded in national health policy.</p>
+    <p class="hero-sub">Sarva (all) &nbsp;·&nbsp; Ayu (life) &nbsp;·&nbsp; For every life. In the right sequence.</p>
+    <div class="hero-divider"></div>
+  </div>
+</section>
+
+<!-- PART ONE -->
+<section class="part">
+  <div class="container">
+    <span class="part-number">Part One</span>
+    <h2 class="part-title">The Software</h2>
+    <p class="part-subtitle">Phase 1 — Active Now</p>
+
+    <div class="prose">
+      <p>Sarvayu is not a fitness app. It is a biological orchestrator. It takes everything known about a person — their chronotype, their cultural food patterns, their stress signals, their biomarkers, their sleep rhythms — and sequences their day in the order that their biology actually wants.</p>
+
+      <p>The intelligence engine is called <strong>Ayurkram</strong> — from Sanskrit Ayu (life) and Kram (sequence). Ayurkram reads the user's biology and produces a daily sequence: when to eat, when to train, when to recover, when to rest. Timed to the individual, not to a clock.</p>
+
+      <h3>What Makes It Different</h3>
+
+      <p><strong>Cultural intelligence at the core.</strong> Sarvayu knows the difference between a South Indian eating curd rice and a Punjabi eating dal makhni. It knows that Navratri fasting changes the eating window. 30+ food cultures, each with real meal data, snack swaps, and recovery foods. This is not a feature. It is the foundation.</p>
+
+      <p><strong>No shame, no punishment.</strong> Sarvayu's behavioral twin predicts when the user is likely to skip a workout or stress-eat — and intervenes before it happens, not after. When a heavy meal is logged, the next three dinners silently recalibrate. The user never sees a warning. They just see excellent meals the next three days.</p>
+
+      <p><strong>Proactive, not reactive.</strong> By 7 AM, the Ayurkram plan exists. The user opens the app and the day is already organized. One readiness score. One big thing to do. The sequence, ready.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PART TWO -->
+<section class="part">
+  <div class="container">
+    <span class="part-number">Part Two</span>
+    <h2 class="part-title">The Device</h2>
+    <p class="part-subtitle">Phase 2 — Research Underway</p>
+
+    <div class="prose">
+      <p>Every wearable on the market was designed for Western bodies, Western climates, and Western price points. None of them were built for India. None of them measure what actually matters for the Indian population — cortisol variation across different work cultures, the metabolic response to a rice-dominant diet, the impact of 45°C summer heat on recovery metrics.</p>
+
+      <p>Sarvayu's device will be built for India from the first prototype.</p>
+    </div>
+
+    <div class="generation-grid">
+      <div class="generation-card">
+        <span class="gen-label">Generation 1</span>
+        <span class="gen-badge active">In Development</span>
+        <div class="gen-title">Foundational Biometrics</div>
+        <ul class="gen-items">
+          <li>Heart rate variability — non-invasive readiness signal</li>
+          <li>SpO2 — blood oxygen, sleep quality, altitude adaptation</li>
+          <li>Skin temperature — hormonal state, illness onset, ovulation</li>
+          <li>Accelerometer — movement, sedentary patterns, sleep stages</li>
+          <li>Galvanic skin response — real-time stress, emotional load</li>
+        </ul>
+      </div>
+      <div class="generation-card">
+        <span class="gen-label">Generation 2</span>
+        <span class="gen-badge research">Post-Validation</span>
+        <div class="gen-title">Hormonal Intelligence</div>
+        <ul class="gen-items">
+          <li>Cortisol estimation from HRV + skin conductance</li>
+          <li>Insulin sensitivity proxy from postprandial signals</li>
+          <li>Cycle phase estimation — enabling cycle-synced plans</li>
+          <li>Testosterone proxy from morning HRV baseline</li>
+        </ul>
+      </div>
+      <div class="generation-card">
+        <span class="gen-label">Generation 3</span>
+        <span class="gen-badge horizon">Research Horizon</span>
+        <div class="gen-title">Non-Invasive Biomarkers</div>
+        <ul class="gen-items">
+          <li>Interstitial glucose — continuous monitoring without needles</li>
+          <li>Hemoglobin proxy — anemia detection for 50%+ of Indian women</li>
+          <li>Hydration index from skin impedance</li>
+          <li>Vitamin D proxy from UV exposure across the day</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="price-callout">
+      <div class="price-amount">₹2,000</div>
+      <div class="price-label">Target Retail Price</div>
+      <p class="price-context">At government procurement pricing, the unit cost falls under ₹800 — the threshold at which the national initiative described in Part Three becomes viable.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PART THREE -->
+<section class="part">
+  <div class="container">
+    <span class="part-number">Part Three</span>
+    <h2 class="part-title">The National Initiative</h2>
+    <p class="part-subtitle">India's Biological Intelligence Infrastructure</p>
+
+    <div class="stats-row">
+      <div class="stat-cell">
+        <div class="stat-number">77M</div>
+        <div class="stat-label">Indians with Type 2 diabetes — highest in the world</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">50%+</div>
+        <div class="stat-label">Indian women affected by anemia</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">₹8L</div>
+        <div class="stat-label">Saved per cardiovascular event prevented</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>The majority of India's chronic disease burden is lifestyle-modifiable. Not inevitable. The result of misaligned eating windows, chronic stress without recovery, and the displacement of traditional Indian food wisdom by processed food culture.</p>
+
+      <p>The Indian healthcare system is built to treat disease after it appears. There is no infrastructure for biological intelligence at the individual level — the kind of continuous, personalized, culturally-rooted guidance that could prevent disease before it begins.</p>
+    </div>
+
+    <div class="proposal-block">
+      <div class="proposal-header">
+        <h3>The Sarvayu National Health Proposal</h3>
+        <p>Government of India procures Sarvayu devices and platform access through existing health infrastructure</p>
+      </div>
+      <div class="proposal-items">
+        <div class="proposal-item">
+          <div class="proposal-icon">◈</div>
+          <div class="proposal-text">
+            <strong>Sarvayu wearable device</strong>
+            <span>Procured at government scale pricing — under ₹800 per unit. Distributed through PMJAY, ASHA workers, Jan Arogya clinics.</span>
+          </div>
+        </div>
+        <div class="proposal-item">
+          <div class="proposal-icon">◈</div>
+          <div class="proposal-text">
+            <strong>Platform access at ₹0</strong>
+            <span>Subsidized subscription for BPL cardholders. Full Ayurkram plan generated on day one.</span>
+          </div>
+        </div>
+        <div class="proposal-item">
+          <div class="proposal-icon">◈</div>
+          <div class="proposal-text">
+            <strong>Weekly biological reports</strong>
+            <span>Shared with each citizen's primary care provider. Integration with ABHA health records.</span>
+          </div>
+        </div>
+        <div class="proposal-item">
+          <div class="proposal-icon">◈</div>
+          <div class="proposal-text">
+            <strong>India's first national biological baseline database</strong>
+            <span>Anonymized, consented biometric data from millions of users — available to ICMR and international researchers.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <h3>Questions This Database Will Answer</h3>
+    </div>
+
+    <ul class="question-list">
+      <li>How does cortisol variance differ between agricultural workers in Vidarbha and tech workers in Bengaluru?</li>
+      <li>What is the actual hormonal impact of Ramadan fasting on Indian Muslim women across different BMI ranges?</li>
+      <li>How does the traditional South Indian breakfast pattern affect insulin sensitivity compared to the North Indian pattern?</li>
+      <li>What is the relationship between social jetlag and cardiovascular risk in India's shift-working population?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PART FOUR -->
+<section class="part">
+  <div class="container">
+    <span class="part-number">Part Four</span>
+    <h2 class="part-title">The Timeline</h2>
+    <p class="part-subtitle">2026 — 2031</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-year">2026</span>
+        <div class="timeline-title">Phase 1 Complete</div>
+        <p class="timeline-body">World-class software. Full Ayurkram engine. Cultural intelligence for 30+ food cultures. 1,000 daily active users. 40% 7-day retention. The product is proven.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2027</span>
+        <div class="timeline-title">Phase 2 — Device Prototype</div>
+        <p class="timeline-body">Prototype wearable with Generation 1 sensors. Clinical validation partnerships with Indian hospitals. Manufacturing partner selected. First 10,000 devices in users' hands.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2028</span>
+        <div class="timeline-title">Phase 2 — Commercial Scale</div>
+        <p class="timeline-body">Device at commercial scale. Retail price under ₹2,000. Distribution through pharmacies, hospitals, and online. 100,000 users. First hormonal estimation research published.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2029</span>
+        <div class="timeline-title">Phase 3 — National Proposal</div>
+        <p class="timeline-body">Government partnership proposal submitted with full impact data from 100,000 user cohort. Pilot program in two states. Integration with ABHA health records.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2031</span>
+        <div class="timeline-title">Phase 3 — Infrastructure</div>
+        <p class="timeline-body">National program active. 10 million users. India's first biological baseline database operational. Research partnerships with ICMR, AIIMS, and international institutions. The data exists to prove the impact on India's healthy lifespan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NORTH STAR -->
+<section class="north-star">
+  <div class="container">
+    <p class="north-star-quote">Every Indian, regardless of income, culture, geography, or education level, has access to a system that knows their biology, respects their culture, and sequences their life in the order that makes them <em>live longer, better, and with more vitality.</em></p>
+    <p class="north-star-attribution">Not because they could afford a premium wellness product.<br>Because India built the infrastructure to make it universal.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer">
+      <div class="footer-brand">SARVAYU</div>
+      <div class="footer-meta">
+        Confidential — Version 1.0<br>
+        March 2026
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
